@@ -2,7 +2,7 @@ import torch
 #import torch.optim as optim
 #import torch.nn as nn
 #from torch.utils.data.dataset import Dataset
-from torchvision import transforms
+#from torchvision import transforms
 #from torchvision import models
 #import torchvision
 #import glob
@@ -22,15 +22,17 @@ def get_segment_labels(image, model, device):
 
 def get_colored_img(_image_):
     img = cv2.cvtColor(_image_, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, (256, 256))
+    img = cv2.resize(img, (512, 512))
 
-    preprocess = transforms.Compose([
-        transforms.ToTensor(),
-    ])
+    #preprocess = transforms.Compose([
+    #    transforms.ToTensor(),
+    #])
 
     # input_tensor = preprocess(img)
 
-    norm_img = preprocess(img / 255)
+    #norm_img = preprocess(img / 255)
+    norm_img = torch.from_numpy(img / 255)
+    norm_img = torch.reshape(norm_img,(3,512,512))
     input_tensor = norm_img.to(torch.float)
     input_batch = input_tensor.unsqueeze(0)
     start = t()
